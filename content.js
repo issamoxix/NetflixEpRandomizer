@@ -21,11 +21,11 @@ if (location.host == "www.netflix.com") {
 
         var reqPath = `path=["videos",${showId},["availability","inRemindMeList","queue"]]&path=["videos",${showId},"seasonList","summary"]&path=["videos",${showId},"seasonList",[0,1,2,3,4,5,6,7,8,9,"current"],"summary"]&path=["videos",${showId},"seasonList","current","episodes","summary"]&path=["videos",${showId},"seasonList","current","episodes",{"from":0,"to":30},["availability","bookmarkPosition","contextualSynopsis","displayRuntime","interactiveBookmark","runtime","summary","title"]]&path=["videos",${showId},"seasonList","current","episodes","current","summary"]&path=["videos",${showId},"seasonList","current","episodes",{"from":0,"to":30},"ancestor","summary"]&path=["videos",${showId},"seasonList","current","episodes",{"from":0,"to":30},"interestingMoment","_342x192","webp"]&authURL=1692472357090.g99DXquCF6Xid5Dl7FvfGe5qHns=`
 
-        var data = await getResponse(reqPath, showId, referrer)
+        var data = await getResponse(reqPath, referrer)
         var sessionsKeys = Object.keys(data.jsonGraph.seasons)
         for (let sessionCode of sessionsKeys) {
             var _reqPath = `path=["seasons",${sessionCode},"episodes",{"from":0,"to":22},["availability","bookmarkPosition","contextualSynopsis","displayRuntime","interactiveBookmark","runtime","summary","title"]]&path=["seasons",${sessionCode},"episodes","current","summary"]&path=["seasons",${sessionCode},"episodes",{"from":0,"to":22},"ancestor","summary"]&path=["seasons",${sessionCode},"episodes",{"from":0,"to":22},"interestingMoment","_342x192","webp"]&authURL=1692556352939.TtDUz6lnSJWuKP8iiecIjx2X2nU=`
-            var _data = await getResponse(_reqPath, showId, referrer)
+            var _data = await getResponse(_reqPath, referrer)
             const videos = _data.jsonGraph.videos
             episodes.push(...Object.values(videos))
 
@@ -34,7 +34,7 @@ if (location.host == "www.netflix.com") {
         return episodes
     }
 
-    async function getResponse(reqPath, showId, referrer) {
+    async function getResponse(reqPath, referrer) {
         var response = await fetch("https://www.netflix.com/nq/website/memberapi/v9cd5f768/pathEvaluator?avif=false&webp=true&drmSystem=widevine&isVolatileBillboardsEnabled=true&routeAPIRequestsThroughFTL=false&isTop10Supported=true&isTop10KidsSupported=true&hasVideoMerchInBob=true&hasVideoMerchInJaw=true&persoInfoDensity=false&enableMultiLanguageCatalog=false&falcor_server=0.1.0&withSize=true&materialize=true&original_path=%2Fshakti%2Fmre%2FpathEvaluator", {
             "headers": {
                 "accept": "*/*",
@@ -62,7 +62,7 @@ if (location.host == "www.netflix.com") {
         TODO
         - handle error .summary == undefined
         probably use recursion func
-        
+
         */
 
         return (async () => {
