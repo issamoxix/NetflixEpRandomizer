@@ -58,6 +58,13 @@ if (location.host == "www.netflix.com") {
 
     async function netflixEpRandomizer() {
 
+        /* 
+        TODO
+        - handle error .summary == undefined
+        probably use recursion func
+        
+        */
+
         return (async () => {
             const Episodes = await getEpisodes()
             // Generating random number & picking the episode from arr 
