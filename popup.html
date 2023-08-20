@@ -7,15 +7,25 @@
         .hide {
             display: none;
         }
-
+        .loading {
+            width: 100vh;
+        }
         body {
             background-color: #141414;
+        }
+
+        button {
+            padding: 29px;
+            font-family: sans-serif;
+            font-size: 15px;
+            font-weight: bold;
         }
     </style>
 </head>
 
 <body>
     <img src="assets/netflix-loading.gif" id="loadingGif" class="loading hide" />
+    <img src="https://sm.pcmag.com/t/pcmag_uk/review/n/netflix/netflix_s42u.1920.png" id="nloading" class="loading" /> 
     <center>
         <button id="sendMessage">RandomEpisode</button>
     </center>
