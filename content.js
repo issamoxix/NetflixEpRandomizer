@@ -23,13 +23,13 @@ if (location.host == "www.netflix.com") {
 
         var data = await getResponse(reqPath, referrer)
         var sessionsKeys = Object.keys(data.jsonGraph.seasons)
-        for (let sessionCode of sessionsKeys) {
-            var _reqPath = `path=["seasons",${sessionCode},"episodes",{"from":0,"to":22},["availability","bookmarkPosition","contextualSynopsis","displayRuntime","interactiveBookmark","runtime","summary","title"]]&path=["seasons",${sessionCode},"episodes","current","summary"]&path=["seasons",${sessionCode},"episodes",{"from":0,"to":22},"ancestor","summary"]&path=["seasons",${sessionCode},"episodes",{"from":0,"to":22},"interestingMoment","_342x192","webp"]&authURL=1692556352939.TtDUz6lnSJWuKP8iiecIjx2X2nU=`
-            var _data = await getResponse(_reqPath, referrer)
-            const videos = _data.jsonGraph.videos
-            episodes.push(...Object.values(videos))
+        var randomNumber = Math.floor(Math.random() * sessionsKeys.length)
+        var sessionCode = sessionsKeys[randomNumber]
+        var _reqPath = `path=["seasons",${sessionCode},"episodes",{"from":0,"to":22},["availability","bookmarkPosition","contextualSynopsis","displayRuntime","interactiveBookmark","runtime","summary","title"]]&path=["seasons",${sessionCode},"episodes","current","summary"]&path=["seasons",${sessionCode},"episodes",{"from":0,"to":22},"ancestor","summary"]&path=["seasons",${sessionCode},"episodes",{"from":0,"to":22},"interestingMoment","_342x192","webp"]&authURL=1692556352939.TtDUz6lnSJWuKP8iiecIjx2X2nU=`
+        var _data = await getResponse(_reqPath, referrer)
+        const videos = _data.jsonGraph.videos
+        episodes.push(...Object.values(videos))
 
-        }
 
         return episodes
     }
@@ -68,7 +68,7 @@ if (location.host == "www.netflix.com") {
         return (async () => {
             const Episodes = await getEpisodes()
             // Generating random number & picking the episode from arr 
-            var randomNumber = Math.floor(Math.random() * Episodes.length + 1)
+            var randomNumber = Math.floor(Math.random() * Episodes.length)
             var randomEpisode = Episodes[randomNumber]
             window.location.replace(`https://www.netflix.com/watch/${randomEpisode.summary.value.id}`)
             return randomEpisode
