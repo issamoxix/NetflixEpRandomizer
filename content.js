@@ -1,7 +1,9 @@
 if (location.host == "www.netflix.com") {
 
-    chrome.runtime.onMessage.addListener(async function (request, sender, sendResponse) {
-        await netflixEpRandomizer()
+    chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+        netflixEpRandomizer().then((randomEpisode) => window.location.replace(randomEpisode))
+        sendResponse({ message: 'done' })
+        return true
     });
 
     async function getEpisodes() {
@@ -58,20 +60,13 @@ if (location.host == "www.netflix.com") {
 
     async function netflixEpRandomizer() {
 
-        /* 
-        TODO
-        - handle error .summary == undefined
-        probably use recursion func
-
-        */
-
         return (async () => {
             const Episodes = await getEpisodes()
             // Generating random number & picking the episode from arr 
             var randomNumber = Math.floor(Math.random() * Episodes.length)
             var randomEpisode = Episodes[randomNumber]
-            window.location.replace(`https://www.netflix.com/watch/${randomEpisode.summary.value.id}`)
-            return randomEpisode
+            // window.location.replace(`https://www.netflix.com/watch/${randomEpisode.summary.value.id}`)
+            return `https://www.netflix.com/watch/${randomEpisode.summary.value.id}`
         })();
 
     }
